@@ -1,0 +1,106 @@
+/* General Styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa; /* Light page background */
+    margin: 0;
+    padding: 0;
+}
+
+/* Navbar Styling */
+.hi {
+    background-color: #E0F7FA; /* Very light grey or any preferred light color */
+    border-radius: 10px; /* Rounded corners for a modern look */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    padding: 20px;
+    margin: 15px auto; /* Center align with some margin */
+    max-width: 90%; /* Adjust the width as needed */
+    display: flex;
+    justify-content: center;  
+    align-items: center;
+    border: 2px solid rgba(0, 172, 193, 0.3);
+}
+
+.navbar {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    width: 100%; /* Ensure navbar fills the hi div's width */
+    gap: 20px;
+}
+.navbar a{
+  font-size: 2.5rem;
+  font-weight: bolder;
+  color: #00796B;
+  text-decoration: none;
+  margin-left: 10px;
+}
+.navbar-brand {
+    font-size: 2rem;
+    font-weight: bolder;
+    color: #00796B;
+    text-decoration: none;
+    margin-left: 10px;
+}
+.navbar-brand:hover {
+    color: #004D40;
+    cursor: pointer;
+}
+
+/* Accordion Container */
+.acco {
+    background-color: #E0F7FA; /* Light grey */
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 15px auto;
+    max-width: 90%; /* Adjust width of the accordion container */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; /* Top-align the content */
+    border: 2px solid rgba(0, 172, 193, 0.3);
+}
+.acco h1{
+  font-size: 2rem;
+  font-weight: bolder;
+  color: #00796B;
+  text-align: center;
+}
+
+/* Accordion Item Styling */
+.accordion-item.custom-card {
+    width: 80%; /* 80% of the parent (acco) width */
+    background-color: #ffffff; /* White card background */
+    border-radius: 20px; /* 20px rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    margin: 10px auto; /* Space between cards */
+    border: 1px solid rgba(0, 0, 0, 0.1); /* Subtle border */
+}
+
+/* Accordion Header */
+.accordion-header .accordion-button {
+    font-size: 1rem;
+    background: transparent;
+    border: none;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Accordion Body */
+.accordion-body {
+    padding: 20px;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    background-color: #ffffff; /* Same as card background */
+    border-top: 1px solid rgba(0, 0, 0, 0.1); /* Border above body */
+}
+
+/* Ensure accordion adapts dynamically */
+.accordion {
+    width: 100%; /* Full width of parent container */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

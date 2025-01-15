@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Periodic Table</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script> -->
+</head>
+
+<body>
+  <div class="try">
+    <div class="hi">
+      <nav class="navbar">
+        <a href="#periodic-table" class="navbar-brand">Periodic Table</a>
+        <ul class="navbar-items">
+          <li><a href="#compare-box">Compare</a></li>
+          <li><a href="#search-box">Search</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <!-- <ul style="list-style: none; display: flex; gap: 20px; margin: 0; padding: 0;"></ul> -->
+      </nav>
+    <!-- <p align="center" class="ppp">Interactive Periodic Table</p> -->
+    </div>
+  </div>
+  
+  <main>
+    <div class="content">
+      <div class="table-container" style="margin-top: 135px;">
+        <!-- Periodic Table -->
+        <div class="periodic-table" id="periodic-table">
+          {% for element in elements %}
+          <div class="element {{ element['type'] }}" data-symbol="{{ element['symbol'] }}"
+            data-name="{{ element['name'] }}" data-number="{{ element['number'] }}"
+            data-weight="{{ element['weight'] }}" data-fact="{{ element['fact']}}"
+            style="grid-column: {{ element['group'] }}; grid-row: {{ element['period'] }};" onclick="showDetails(this)">
+            <div class="number">{{ element['number'] }}</div>
+            <div class="symbol">{{ element['symbol'] }}</div>
+            <div class="name">{{ element['name'] }}</div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Color Code Legend -->
+      <div id="leg">
+        <section class="legend">
+          <div class="legend-item" data-type="alkali" onclick="highlightElements(this)">
+            <div class="color-code alkali"></div>
+            <span>Alkali metals</span>
+          </div>
+          <div class="legend-item" data-type="alkaline-earth" onclick="highlightElements(this)">
+            <div class="color-code alkaline-earth"></div>
+            <span>Alkaline earth metals</span>
+          </div>
+          <div class="legend-item" data-type="transition-metal" onclick="highlightElements(this)">
+            <div class="color-code transition-metal"></div>
+            <span>Transition metals</span>
+          </div>
+          <div class="legend-item" data-type="post-transition-metal" onclick="highlightElements(this)">
+            <div class="color-code post-transition-metal"></div>
+            <span>Post-transition metals</span>
+          </div>
+          <div class="legend-item" data-type="metalloid" onclick="highlightElements(this)">
+            <div class="color-code metalloid"></div>
+            <span>Metalloids</span>
+          </div>
+          <div class="legend-item" data-type="reactive-non-metal" onclick="highlightElements(this)">
+            <div class="color-code reactive-non-metal"></div>
+            <span>Reactive non-metals</span>
+          </div>
+          <div class="legend-item" data-type="noble-gas" onclick="highlightElements(this)">
+            <div class="color-code noble-gas"></div>
+            <span>Noble gases</span>
+          </div>
+          <div class="legend-item" data-type="lanthanide" onclick="highlightElements(this)">
+            <div class="color-code lanthanide"></div>
+            <span>Lanthanides</span>
+          </div>
+          <div class="legend-item" data-type="actinide" onclick="highlightElements(this)">
+            <div class="color-code actinide"></div>
+            <span>Actinides</span>
+          </div>
+          <div class="legend-item" data-type="unknown" onclick="highlightElements(this)">
+            <div class="color-code unknown"></div>
+            <span>Unknown properties</span>
+          </div>
+        </section>
+      </div>
+
+      <!-- Element Details Box -->
+      <div class="func">
+
+        <div class="compare-box hidden" id="compare-box">
+          <h2>Compare Elements</h2>
+          <form id="compare-form">
+            <label for="element1">Element 1:</label>
+            <select id="element1" name="element1">
+              {% for element in elements %}
+              <option value="{{ element['symbol'] }}">{{ element['name'] }} ({{ element['symbol'] }})</option>
+              {% endfor %}
+            </select>
+            <br><br>
+
+            <label for="element2">Element 2:</label>
+            <select id="element2" name="element2">
+              {% for element in elements %}
+              <option value="{{ element['symbol'] }}">{{ element['name'] }} ({{ element['symbol'] }})</option>
+              {% endfor %}
+            </select>
+            <br><br>
+            <button type="button" onclick="compareElements()">Compare</button>
+          </form>
+          <div id="compare-result" class="compare-result"></div>
+        </div>
+        <div class="details-box" id="details-box">
+          <h2>Element Details</h2>
+          <div id="details-content" class="details-result"></div>
+
+          <!-- Fun Fact Prompt Section (Initially hidden) -->
+          <div id="fact-prompt" class="fact-prompt" style="display:none;">
+            <p style="font-weight: bold;">Do you want to know a fun fact about this element?</p>
+            <input type="radio" id="yes-fact" name="fact" value="yes" onclick="showFact()">
+            <label for="yes-fact">Yes</label>
+            <input type="radio" id="no-fact" name="fact" value="no" onclick="hideFact()">
+            <label for="no-fact">No</label>
+          </div>
+
+          <!-- Fact Box (Initially hidden) -->
+          <div id="fact-box">
+            <h2>Fun Fact</h2>
+            <p id="fact-content"></p>
+          </div>
+        </div>
+
+        <div class="search-box hidden" id="search-box">
+          <h2>Search Element</h2>
+          <form id="search-form">
+            <label for="search-type">Search By:</label>
+            <select id="search-type" name="search-type" onchange="updateSearchInput()">
+              <option value="name">Name</option>
+              <option value="number">Atomic Number</option>
+              <option value="symbol">Symbol</option>
+            </select>
+            <br><br>
+            <label for="search-input">Enter:</label>
+            <input type="text" id="search-input" name="search-input" placeholder="Enter search value" required>
+            <br><br>
+            <button type="button" onclick="searchElement()">Search</button>
+          </form>
+          <div id="search-result" class="search-result"></div>
+        </div>
+      </div>
+      <div class="faqbox">
+        <div class="faq" id="faq">
+          <a href="/faqq">
+            <h2 id="faqsec">Frequency Asked Questions</h2>
+          </a>
+          <div class="faq-table">
+            <table>
+              <tr>
+                <td class="faq-ques">What is the periodic table?</td>
+                <td class="faq-ques">What is the atomic number?</td>
+              </tr>
+              <tr>
+                <td class="faq-ques">Who created the periodic table?</td>
+                <td class="faq-ques">What is an isotope?</td>
+              </tr>
+              <tr>
+                <td class="faq-ques">How many elements are in the periodic table?</td>
+                <td class="faq-ques">What is the most reactive metal?</td>
+              </tr>
+              <tr>
+                <td class="faq-ques">What is the lightest element?</td>
+                <td class="faq-ques">What is the most reactive non-metal?</td>
+              </tr>
+              <tr>
+                <td class="faq-ques">What is the heaviest naturally occurring element?</td>
+                <td class="faq-ques">What are transition metals?</td>
+              </tr>
+              <tr>
+                <td class="faq-ques">Which element is liquid at room temperature?</td>
+                <td class="faq-ques">What is the symbol for sodium?</td>
+              </tr>
+              <tr>
+                <td class="faq-ques">What are noble gases?</td>
+                <td class="faq-ques">Which element is used in pencils?</td>
+              </tr>
+              <tr>
+                <td class="faq-ques">What is the most abundant element in the universe?</td>
+                <td class="faq-ques">What is the rarest naturally occurring element?</td>
+              </tr>
+              <tr>
+                <td class="faq-ques">What is the symbol for gold?</td>
+                <td class="faq-ques">What is the element with the highest atomic number?</td>
+              </tr>
+              <tr>
+                <td class="faq-ques">Which element has the highest melting point?</td>
+                <td class="faq-ques">Which element is used in making semiconductors?</td>
+              </tr>
+            </table>
+          </div>
+
+        </div>
+      </div>
+  </main>
+  <footer>
+    <div class="contact-us" id="contact">
+      <h3>Contact Us</h3>
+      <p>We would love to hear from you! Reach out to us through any of the following methods:</p>
+      <ul style="list-style: none; padding: 0;">
+        <li><strong>Email:</strong> <a href="mailto:support@example.com">support@example.com</a></li>
+        <li><strong>Phone:</strong> +1-234-567-890</li>
+        <li><strong>Address:</strong> 123 Main Street, Hometown, Country</li>
+      </ul>
+      <p>Follow us on social media:</p>
+      <ul style="list-style: none; padding: 0; display: flex; gap: 15px;">
+        <li><a href="https://www.facebook.com" target="_blank" style="text-decoration: none;">Facebook</a></li>
+        <li><a href="https://www.twitter.com" target="_blank" style="text-decoration: none;">Twitter</a></li>
+        <li><a href="https://www.instagram.com" target="_blank" style="text-decoration: none;">Instagram</a></li>
+        <li><a href="https://www.linkedin.com" target="_blank" style="text-decoration: none;">LinkedIn</a></li>
+      </ul>
+    </div>
+  </footer>
+
+
+  <script>
+    const elements = {{ elements | tojson | safe }};
+    document.addEventListener("DOMContentLoaded", function () {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible"); // Add visible when entering
+          } else {
+            entry.target.classList.remove("visible"); // Remove visible when exiting
+          }
+        });
+      });
+
+      // Observe each box individually
+      const targets = document.querySelectorAll(".hidden");
+      targets.forEach((target) => observer.observe(target));
+    });
+
+    // Smooth scroll function to the specified element with a duration of 1000ms
+    function smoothScrollTo(element, duration) {
+      const start = window.scrollY;
+      const end = element.getBoundingClientRect().top + window.scrollY;
+      const distance = end - start;
+      let startTime = null;
+
+      function scrollAnimation(currentTime) {
+        if (startTime === null) startTime = currentTime;
+        const timeElapsed = currentTime - startTime;
+        const scrollAmount = Math.min(timeElapsed / duration * distance, distance);
+
+        window.scrollTo(0, start + scrollAmount);
+
+        if (timeElapsed < duration) {
+          requestAnimationFrame(scrollAnimation);
+        }
+      }
+
+      requestAnimationFrame(scrollAnimation);
+    }
+
+    document.querySelector('a[href="#periodic-table"]').addEventListener('click', function (event) {
+      event.preventDefault(); // Prevent default link behavior (no instant scroll)
+
+      const periodicTableSection = document.getElementById('periodic-table');
+      const offset = 150; // The margin you want to apply (135px)
+
+      // Smooth scroll to the periodic table section with an offset
+      window.scrollTo({
+        top: periodicTableSection.offsetTop - offset,
+        behavior: 'smooth'
+      });
+    });
+    document.querySelector('a[href="#faq"]').addEventListener('click', function (event) {
+      event.preventDefault(); // Prevent default link behavior (no instant scroll)
+
+      const periodicTableSection = document.getElementById('faq');
+      const offset = 125; // The margin you want to apply (135px)
+
+      // Smooth scroll to the periodic table section with an offset
+      window.scrollTo({
+        top: periodicTableSection.offsetTop - offset,
+        behavior: 'smooth'
+      });
+    });
+    document.querySelector('a[href="#search-box"]').addEventListener('click', function (event) {
+      event.preventDefault(); // Prevent default link behavior (no instant scroll)
+
+      const periodicTableSection = document.getElementById('search-box');
+      const offset = 125; // The margin you want to apply (135px)
+
+      // Smooth scroll to the periodic table section with an offset
+      window.scrollTo({
+        top: periodicTableSection.offsetTop - offset,
+        behavior: 'smooth'
+      });
+    });
+    document.querySelector('a[href="#compare-box"]').addEventListener('click', function (event) {
+      event.preventDefault(); // Prevent default link behavior (no instant scroll)
+
+      const periodicTableSection = document.getElementById('compare-box');
+      const offset = 125; // The margin you want to apply (135px)
+
+      // Smooth scroll to the periodic table section with an offset
+      window.scrollTo({
+        top: periodicTableSection.offsetTop - offset,
+        behavior: 'smooth'
+      });
+    });
+    document.querySelector('a[href="#contact"]').addEventListener('click', function (event) {
+      event.preventDefault(); // Prevent default link behavior (no instant scroll)
+
+      const periodicTableSection = document.getElementById('contact');
+      const offset = 125; // The margin you want to apply (135px)
+
+      // Smooth scroll to the periodic table section with an offset
+      window.scrollTo({
+        top: periodicTableSection.offsetTop - offset,
+        behavior: 'smooth'
+      });
+    });
+
+
+
+    // Custom smooth scroll function with adjustable speed
+    function smoothScrollTo(element, duration) {
+      const start = window.scrollY;
+      const end = element.getBoundingClientRect().top + window.scrollY;
+      const distance = end - start;
+      let startTime = null;
+
+      function scrollAnimation(currentTime) {
+        if (startTime === null) startTime = currentTime;
+        const timeElapsed = currentTime - startTime;
+        const scrollAmount = Math.min(timeElapsed / duration * distance, distance);
+
+        window.scrollTo(0, start + scrollAmount);
+
+        if (timeElapsed < duration) {
+          requestAnimationFrame(scrollAnimation);
+        }
+      }
+
+      requestAnimationFrame(scrollAnimation);
+    }
+
+    // Event listener for clicking on an element
+    document.querySelectorAll('.element').forEach(item => {
+      item.addEventListener('click', function () {
+        // Get the element details div
+        const detailsDiv = document.getElementById('details-box');
+        const offset = 125;
+
+        window.scrollTo({
+        top: detailsDiv.offsetTop - offset,
+        behavior: 'smooth'
+      });
+        // Call the smooth scroll function with 1000 ms duration
+        // smoothScrollTo(detailsDiv, 2500); // Adjust duration as needed (1000 ms = 1 second)
+      });
+    });
+
+
+    function showDetails(element) {
+      const name = element.dataset.name;
+      const symbol = element.dataset.symbol;
+      const number = element.dataset.number;
+      const atomicWeight = element.dataset.weight;
+      const fact = element.dataset.fact;
+
+      // Populate details section
+      const detailsContent = `
+        <strong>Name:</strong> ${name}<br>
+        <strong>Symbol:</strong> ${symbol}<br>
+        <strong>Atomic Number:</strong> ${number}<br>
+        <strong>Atomic Weight:</strong> ${atomicWeight}
+      `;
+      document.getElementById('details-content').innerHTML = detailsContent;
+
+      // Show the element details box
+      document.getElementById('details-box').style.display = 'block';
+
+      // Display the fun fact prompt section
+      document.getElementById('fact-prompt').style.display = 'block';
+      document.getElementById('fact-box').style.display = 'none'; // Hide fun fact box initially
+
+      document.getElementById('yes-fact').checked = false;
+      document.getElementById('no-fact').checked = false;
+
+      // Set the fact content
+      document.getElementById('fact-content').textContent = fact;
+    }
+
+    // Show the fun fact when "Yes" is clicked
+    function showFact() {
+      // const fact = document.getElementById('fact-content').textContent;
+      document.getElementById('fact-box').style.display = 'block';  // Show the fact box
+      // document.getElementById('fact-content').textContent = fact;
+    }
+
+    // Hide the fun fact when "No" is clicked
+    function hideFact() {
+      document.getElementById('fact-box').style.display = 'none';  // Hide the fact box
+    }
+    function highlightElements(legendItem) {
+      // Remove glow from all elements
+      document.querySelectorAll('.element').forEach(el => {
+        el.classList.remove('glow');
+      });
+
+      // Get the type from the legend item
+      const type = legendItem.dataset.type;
+
+      // Add glow to elements of the corresponding type
+      document.querySelectorAll(`.element.${type}`).forEach(el => {
+        el.classList.add('glow');
+      });
+    }
+    function compareElements() {
+      const element1Symbol = document.getElementById('element1').value;
+      const element2Symbol = document.getElementById('element2').value;
+
+      const element1 = getElementDetails(element1Symbol);
+      const element2 = getElementDetails(element2Symbol);
+
+      let resultHTML = '<h3>Comparison Result:</h3>';
+
+      // Compare each property and highlight differences
+      resultHTML += compareProperty('Name', element1.name, element2.name);
+      resultHTML += compareProperty('Symbol', element1.symbol, element2.symbol);
+      resultHTML += compareProperty('Atomic Number', element1.number, element2.number);
+      resultHTML += compareProperty('Atomic Weight', element1.weight, element2.weight);
+
+      // Display the comparison result
+      document.getElementById('compare-result').innerHTML = resultHTML;
+    }
+
+    function getElementDetails(symbol) {
+      return elements.find(element => element.symbol === symbol);
+    }
+
+    function compareProperty(propertyName, value1, value2) {
+      // If values are different, highlight them
+      if (value1 !== value2) {
+        return `
+          <p><strong>${propertyName}:</strong> 
+            <span class="difference">${value1}</span> vs <span class="difference">${value2}</span>
+          </p>
+        `;
+      } else {
+        return `
+          <p><strong>${propertyName}:</strong> ${value1}</p>
+        `;
+      }
+    }
+    function updateSearchInput() {
+      const searchType = document.getElementById('search-type').value;
+      const searchInput = document.getElementById('search-input');
+
+      // Clear previous input value
+      searchInput.value = '';
+
+      // Set placeholder based on search type
+      if (searchType === 'name') {
+        searchInput.placeholder = "Enter element name";
+      } else if (searchType === 'number') {
+        searchInput.placeholder = "Enter atomic number";
+      } else {
+        searchInput.placeholder = "Enter element symbol";
+      }
+    }
+
+    function searchElement() {
+      const searchType = document.getElementById('search-type').value;
+      const searchValue = document.getElementById('search-input').value.trim();
+
+      if (searchValue === '') {
+        return alert('Please enter a value to search.');
+      }
+
+      const element = findElement(searchType, searchValue);
+
+      let resultHTML = '<h3>Search Result:</h3>';
+
+      if (element) {
+        resultHTML += `
+      <p><strong>Name:</strong> ${element.name}</p>
+      <p><strong>Symbol:</strong> ${element.symbol}</p>
+      <p><strong>Atomic Number:</strong> ${element.number}</p>
+      <p><strong>Atomic Weight:</strong> ${element.weight}</p>
+    `;
+      } else {
+        resultHTML += `<p class="error">No such element found.</p>`;
+      }
+
+      // Display the search result
+      document.getElementById('search-result').innerHTML = resultHTML;
+    }
+
+    function findElement(searchType, searchValue) {
+      if (searchType === 'name') {
+        return elements.find(element => element.name.toLowerCase() === searchValue.toLowerCase());
+      } else if (searchType === 'number') {
+        return elements.find(element => element.number === parseInt(searchValue));
+      } else if (searchType === 'symbol') {
+        return elements.find(element => element.symbol.toLowerCase() === searchValue.toLowerCase());
+      }
+
+      return null;
+    }
+
+
+  </script>
+</body>
+
+</html>

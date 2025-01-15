@@ -1,0 +1,566 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #ffffff;
+  color: #333333; /* Standard dark gray for better readability */
+}
+
+header {
+  background: linear-gradient(90deg, #003366, #6a5acd);
+  color: #ffffff; /* Ensure header text is visible against the gradient */
+  padding: 10px;
+  text-align: center;
+  font-size: 2rem;
+  line-height: 1.5;
+}
+.hi{
+  background-color: #E0F7FA; /* Very light grey or any preferred light color */
+  border-radius: 10px; /* Rounded corners for a modern look */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  padding: 20px;
+  margin: 15px auto; /* Center align with some margin */
+  max-width: 90%; /* Adjust the width as needed */
+  height: 70px;
+  display: flex;
+  justify-content: center;  
+  align-items: center;
+  border: 2px solid rgb(0, 172, 193,0.3);
+}
+
+/* Periodic Table Layout */
+.periodic-table {
+  display: grid;
+  grid-template-columns: repeat(18, 1fr);
+  grid-template-rows: repeat(9, 1fr);
+  gap: 4px; /* Increased gap for better spacing */
+  padding: 5px;
+  margin: 7px;
+}
+
+.element {
+  background-color: #f0f0f0; /* Subtle light gray for neutral background */
+  border: 1px solid #00796B; /* Softer border color */
+  border-radius: 8px; /* Slightly more rounded corners */
+  text-align: center;
+  padding: 1px;
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.2s, box-shadow 0.2s;
+  font-size: 0.4rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.element:hover {
+  transform: scale(1.15);
+  transition: 0.005s;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Add subtle shadow */
+}
+
+/* Number, symbol, and name styling */
+.number {
+  font-size: 0.6rem;
+  color: #666666; /* Dark gray for less contrast */
+  font-weight: bold;
+}
+
+.symbol {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333333; /* Consistent text color */
+}
+
+.name {
+  font-size: 0.7rem;
+  color: #444444; /* Slightly softer than symbol */
+  font-weight: 400;
+}
+
+/* Element color coding based on type */
+.alkali {
+  background-color: #FFD580; /* Warm yellow */
+}
+
+.alkaline-earth {
+  background-color: #FFF9C4; /* Soft green */
+}
+
+.transition-metal {
+  background-color: #90CAF9; /* Pale blue */
+}
+
+.post-transition-metal {
+  background-color: #80DEEA; /* Light pink */
+}
+
+.metalloid {
+  background-color: #A5D6A7; /* Lavender */
+}
+
+.reactive-non-metal {
+  background-color: #F8BBD0; /* Light coral */
+}
+
+.noble-gas {
+  background-color: #CE93D8; /* Light cyan */
+}
+
+.lanthanide {
+  background-color: #FFECB3; /* Moccasin */
+}
+
+.actinide {
+  background-color: #E1BEE7; /* Plum */
+}
+
+.unknown {
+  background-color: #CFD8DC; /* Gainsboro */
+}
+
+/* Element Details Section */
+.details {
+  padding: 15px;
+  background-color: #ffffff; /* Clean white for contrast */
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  /* justify-content: space-between; */
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #E0F7FA; /* Soft gray for subtle contrast */
+  border-radius: 8px;
+  max-width: 90%;
+  gap: 10px;
+  border: 2px solid rgb(0, 172, 193,0.3);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  width: calc(17%);
+  background-color: #ffffff; /* Clean white background */
+  border: 2px solid rgb(0, 172, 193,0.3);
+  padding: 5px;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  box-sizing: border-box;
+  margin-left: 25px;
+  cursor: pointer;
+}
+
+.legend-item span {
+  margin-left: 10px;
+  font-size: 1rem;
+  color: #333333; /* Dark gray for text */
+}
+
+/* Style for color circles */
+.legend-item .color-code {
+  margin-left: 20px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid black;
+}
+
+/* Add glowing border for selected elements */
+.element.glow {
+  border: 1px solid #fefefe; /* Bright yellow glow */
+  box-shadow: 0 0 10px #0b0b0b, 0 0 10px #0b0b0b; /* Strong glowing effect */
+}
+
+.ppp {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #002855;
+}
+.table-container{
+  background-color: #E0F7FA; /* Very light grey or any preferred light color */
+  border-radius: 10px; /* Rounded corners for a modern look */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  padding: 20px;
+  margin: 1px auto; /* Center align with some margin */
+  max-width: 90%; /* Adjust the width as needed */
+  border: 2px solid rgb(0, 172, 193,0.3);
+}
+
+
+.details-box,
+.compare-box,
+.search-box{
+  background-color: #E0F7FA;
+  border-radius: 10px;
+  border: 2px solid rgb(0, 172, 193,0.3);
+  /* display: inline-block; */
+  padding: 20px;
+  max-width: 30%;
+  flex: 1;
+  text-align: center;
+  margin-bottom: 100px;
+  height: 400px;
+  /* box-sizing: border-box; */
+}
+.compare-result {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border: 2px solid rgb(0, 172, 193,0.3);
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.details-result{
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border: 2px solid rgb(0, 172, 193,0.3);
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.compare-result p {
+  margin: 2px 0;
+  padding: 0px;
+  font-size: 1rem;
+}
+
+.compare-result .difference {
+  font-weight: bold;
+  color: #163b06; /* Highlight differences in red */
+}
+
+.func{
+  max-width: 93%;
+  /* justify-content: space-between; */
+  gap: 10px;
+  display: flex;
+  margin-left: 53px;
+}
+.search-result {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border: 2px solid rgb(0, 172, 193,0.3);
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.search-result p {
+  margin: 5px 0;
+  font-size: 1rem;
+}
+
+.search-result .error {
+  color: #ff6b6b;
+  font-weight: bold;
+}
+/* Base hidden state */
+.hidden {
+  opacity: 0;
+  transition: opacity 0.1s ease-out, transform 1s ease-out;
+  position: relative; /* To control positions */
+}
+
+/* Individual animations for each div */
+.compare-box {
+  transform: translateX(-100%); /* Start from the left */
+}
+
+.search-box {
+  transform: translateX(100%); /* Start from the right */
+}
+
+/* When visible: Reset transforms and fade in */
+.visible {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+h1{
+  color: #163b06;
+}
+#fact-box {
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  margin: 10px auto;
+  max-width: 90%;
+  border: 2px solid rgb(0, 172, 193,0.3);;
+  display: none;
+}
+/* .fact-prompt {
+  margin-top: 5px;
+} */
+h2{
+  color: #00796B;
+}
+h3{
+  color: #00796B;
+}
+@media screen and (max-width: 768px) {
+  .periodic-table {
+      grid-template-columns: repeat(4, 1fr); /* Show fewer columns */
+  }
+
+  .details-box,
+  .compare-box,
+  .search-box {
+      max-width: 100%;
+      height: auto; /* Adjust height for smaller screens */
+      margin-bottom: 20px;
+  }
+
+  .legend {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 15px;
+  }
+
+  .hi {
+      flex-direction: column; /* Stack elements vertically */
+      height: auto;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .element {
+      font-size: 0.3rem; /* Adjust text size */
+      padding: 5px;
+  }
+
+  .symbol {
+      font-size: 0.9rem;
+  }
+
+  .name {
+      font-size: 0.5rem;
+  }
+
+  .legend-item {
+      width: calc(50% - 10px); /* Show fewer items per row */
+  }
+}
+.func {
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  gap: 15px;
+  margin-left: 0 auto;
+  margin-bottom: -70px;
+}
+
+.legend {
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.periodic-table {
+  overflow-x: auto; /* Horizontal scrolling if needed */
+}
+
+body {
+  overflow-x: hidden; /* Avoid unintended horizontal scrolling */
+}
+/* General styles */
+/* General styles */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* Center-aligning the hi div */
+.hi {
+  width: 100%; /* Adjust the width as needed */
+  /* max-width: 1200px; Ensures the navbar doesn't stretch too wide */
+  position: fixed;
+  top: 0;
+  left: 50%; /* Start at the center */
+  transform: translateX(-50%); /* Offset by half its width for centering */
+  background-color: #E0F7FA;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 10px 20px;
+  border: 2px solid rgba(0, 172, 193, 0.3);
+  z-index: 1000;
+}
+
+/* Navbar structure */
+.navbar {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  width: 100%; /* Ensure navbar fills the hi div's width */
+  gap: 20px;
+}
+
+/* Navbar brand */
+.navbar-brand {
+  /* font-family: 'Courier New', Courier, monospace; */
+  font-size: 2rem;
+  font-weight: bolder;
+  color: #00796B;
+  text-decoration: none;
+  margin-left: 10px;
+}
+
+.navbar-brand:hover {
+  color: #004D40;
+  cursor: pointer;
+}
+
+/* Navbar items */
+.navbar-items {
+  list-style: none;
+  display: flex;
+  gap: 20px; /* Space between menu items */
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-items li {
+  display: inline-block;
+}
+
+.navbar-items li a {
+  /* font-family: 'Courier New', Courier, monospace; */
+
+  text-decoration: none;
+  color: #00796B;
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+
+.navbar-items li a:hover {
+  color: #004D40;
+  transform: translateY(-3px); /* Slight upward movement */
+}
+
+/* For smaller screens (Optional) */
+@media screen and (max-width: 768px) {
+  .hi {
+    width: 95%; /* Adjust for smaller screens */
+  }
+
+  .navbar-brand {
+    font-size: 1.2rem;
+  }
+
+  .navbar-items li a {
+    font-size: 0.9rem;
+  }
+}
+
+.contact-us{
+  width: 90%; /* Adjust the width as needed */
+  left: 50%; 
+  background-color: #E0F7FA;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 10px 20px;
+  border: 2px solid rgba(0, 172, 193, 0.3);
+  font-size: 18px;
+  height: 200px;
+  margin-bottom: 20px;
+}
+.faq{
+  width: 90%; /* Adjust the width as needed */
+  left: 50%; 
+  background-color: #E0F7FA;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 10px 20px;
+  border: 2px solid rgba(0, 172, 193, 0.3);
+  font-size: 18px;
+  height: 700px;
+  margin-bottom: 20px;
+  
+}
+
+footer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+footer h3{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.faqbox{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.faqbox h2{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.faqbox a{
+  text-decoration: none;
+}
+.faq-table table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 10px;
+  border: none;
+}
+
+.faq-table td {
+  padding: 15px 20px; /* Add padding for a pill-like appearance */
+  border: 1px solid #ddd; /* Add a border for visibility */
+  text-align: center; /* Center the text horizontally */
+  vertical-align: middle; /* Center the text vertically */
+  border-radius: 10px; /* Makes the td elements pill-shaped */
+  background-color: #f8f9fa; /* Light background for the pill */
+  font-weight: bold; /* Make the text bold */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow */
+}
+
+.faq-ques {
+  font-weight: bold;
+  font-size: 14px;
+  margin: 0;
+}
+footer {
+  padding: 20px 0;
+  text-align: center;
+  /* margin-top: 30px; */
+}
+
+footer h3 {
+  font-size: 1.5rem;
+  color: #00796B;
+  margin-bottom: 10px;
+}
+
+footer p, footer ul {
+  font-size: 1rem;
+  color: #004D40;
+  margin: 5px 0;
+}
+
+footer ul {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 0;
+  list-style: none;
+}
+
+footer ul li a {
+  color: #00796B;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+footer ul li a:hover {
+  color: #004D40;
+  text-decoration: underline;
+}
