@@ -1,34 +1,29 @@
 from flask import Flask, render_template
-from element_data import elements  # Import the elements list from element_data.py
-import mysql.connector
+from element_data import elements
 
 app = Flask(__name__)
 
-@app.route('/')
+@app.route("/")
 def index():
-    return render_template('index.html', elements=elements)  # Pass the elements list to the template
+    return render_template("index.html", elements=elements)
 
-def get_db_connection():
-    return mysql.connector.connect(
-        host="localhost",
-        user="root",  # Replace with your MySQL username
-        password="",  # Replace with your MySQL password
-        database="elements"  # Database name
-    )
-
-@app.route('/faqq')
+@app.route("/faqq")
 def faqq():
-    conn = get_db_connection()
-    cursor = conn.cursor(dictionary=True)
-
-    # Query the FAQs
-    cursor.execute("SELECT id, question, answer FROM faqs")
-    faqs = cursor.fetchall()
-
-    # Close the connection
-    cursor.close()
-    conn.close()
-
+    # Static FAQs for now (replace later if needed)
+    faqs = [
+        {
+            "question": "What is the periodic table?",
+            "answer": "The periodic table is a chart that organizes chemical elements based on atomic number and properties."
+        },
+        {
+            "question": "Who created the periodic table?",
+            "answer": "Dmitri Mendeleev created the first widely recognized periodic table."
+        },
+        {
+            "question": "What is an atomic number?",
+            "answer": "The atomic number is the number of protons in an atom."
+        }
+    ]
     return render_template("faqq.html", faqs=faqs)
 
 if __name__ == "__main__":
