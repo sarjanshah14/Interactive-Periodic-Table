@@ -9,22 +9,18 @@ def index():
 
 @app.route("/faqq")
 def faqq():
-    # Static FAQs for now (replace later if needed)
     faqs = [
         {
             "question": "What is the periodic table?",
-            "answer": "The periodic table is a chart that organizes chemical elements based on atomic number and properties."
+            "answer": "The periodic table organizes elements based on atomic number and properties."
         },
         {
             "question": "Who created the periodic table?",
-            "answer": "Dmitri Mendeleev created the first widely recognized periodic table."
+            "answer": "Dmitri Mendeleev created the periodic table."
         },
         {
             "question": "What is an atomic number?",
-            "answer": "The atomic number is the number of protons in an atom."
+            "answer": "It is the number of protons in an atom."
         }
     ]
     return render_template("faqq.html", faqs=faqs)
-
-if __name__ == "__main__":
-    app.run(debug=True)
