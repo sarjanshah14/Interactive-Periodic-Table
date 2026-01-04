@@ -15,6 +15,11 @@
     <div class="hi">
       <nav class="navbar">
         <a href="#periodic-table" class="navbar-brand">Periodic Table</a>
+        <button class="hamburger" onclick="toggleMobileMenu()" aria-label="Toggle navigation menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
         <ul class="navbar-items">
           <li><a href="#compare-box">Compare</a></li>
           <li><a href="#search-box">Search</a></li>
@@ -25,6 +30,19 @@
       </nav>
     <!-- <p align="center" class="ppp">Interactive Periodic Table</p> -->
     </div>
+  </div>
+  
+  <!-- Mobile Navigation Overlay -->
+  <div class="mobile-nav-overlay" id="mobile-nav-overlay" onclick="closeMobileMenu()"></div>
+  
+  <!-- Mobile Navigation Menu -->
+  <div class="mobile-nav-menu" id="mobile-nav-menu">
+    <ul class="navbar-items">
+      <li><a href="#compare-box" onclick="closeMobileMenu()">Compare</a></li>
+      <li><a href="#search-box" onclick="closeMobileMenu()">Search</a></li>
+      <li><a href="#faq" onclick="closeMobileMenu()">FAQ</a></li>
+      <li><a href="#contact" onclick="closeMobileMenu()">Contact</a></li>
+    </ul>
   </div>
   
   <main>
@@ -228,6 +246,42 @@
 
 
   <script>
+    // Mobile Menu Functions
+    function toggleMobileMenu() {
+      const hamburger = document.querySelector('.hamburger');
+      const mobileMenu = document.getElementById('mobile-nav-menu');
+      const overlay = document.getElementById('mobile-nav-overlay');
+      
+      hamburger.classList.toggle('active');
+      mobileMenu.classList.toggle('active');
+      overlay.classList.toggle('active');
+      
+      // Prevent body scroll when menu is open
+      if (mobileMenu.classList.contains('active')) {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = '';
+      }
+    }
+    
+    function closeMobileMenu() {
+      const hamburger = document.querySelector('.hamburger');
+      const mobileMenu = document.getElementById('mobile-nav-menu');
+      const overlay = document.getElementById('mobile-nav-overlay');
+      
+      hamburger.classList.remove('active');
+      mobileMenu.classList.remove('active');
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    
+    // Close mobile menu on escape key
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape') {
+        closeMobileMenu();
+      }
+    });
+    
     const elements = {{ elements | tojson | safe }};
     document.addEventListener("DOMContentLoaded", function () {
       const observer = new IntersectionObserver((entries) => {
