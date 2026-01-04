@@ -1,24 +1,19 @@
 import os
 import sys
 
-# Dynamically add the api directory to path for serverless compatibility
+# Serverless compatibility: add current directory to path
 _CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
-_API_DIR = _CURRENT_DIR
-
-# Add api directory to path for element_data import
-if _API_DIR not in sys.path:
-    sys.path.insert(0, _API_DIR)
+if _CURRENT_DIR not in sys.path:
+    sys.path.insert(0, _CURRENT_DIR)
 
 from flask import Flask, render_template
-
-# Import elements from element_data module
 from element_data import elements
 
-app = Flask(
-    __name__,
-    template_folder=os.path.join(_API_DIR, "templates"),
-    static_folder=os.path.join(_API_DIR, "static")
-)
+app = Flask(__name__)
+
+# Configure paths dynamically for serverless
+app.template_folder = os.path.join(_CURRENT_DIR, "templates")
+app.static_folder = os.path.join(_CURRENT_DIR, "static")
 
 @app.route("/")
 def index():
@@ -27,9 +22,9 @@ def index():
 @app.route("/faqq")
 def faqq():
     faqs = [
-        {"id": 1, "question": "What is the periodic table?", "answer": "The periodic table is a tabular display of the chemical elements, arranged by atomic number, electron configuration, and recurring chemical properties."},
-        {"id": 2, "question": "Who created the periodic table?", "answer": "The periodic table was developed by Russian chemist Dmitri Mendeleev in 1869."},
-        {"id": 3, "question": "What is an atomic number?", "answer": "The atomic number is the number of protons in the nucleus of an atom of a chemical element."}
+        {"id": 1, "question": "What is the periodic table?", "answer": "Organizes chemical elements by atomic properties."},
+        {"id": 2, "question": "Who created it?", "answer": "Dmitri Mendeleev in 1869."},
+        {"id": 3, "question": "What is atomic number?", "answer": "Number of protons in an atom."}
     ]
     return render_template("faqq.html", faqs=faqs)
 
