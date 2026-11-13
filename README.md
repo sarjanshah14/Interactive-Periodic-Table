@@ -1,70 +1,24 @@
 # Interactive Periodic Table
 
-A Flask-based web application that displays an interactive periodic table and a Frequently Asked Questions (FAQ) section.
+A college project: a web page that shows all elements in the standard periodic-table layout, colour-coded by element type. Click an element to see its details, including atomic weight and a short fact. There's also a page of frequently asked questions about the periodic table.
 
-## Features
+## Tech
 
--   **Interactive Periodic Table**: Explore chemical elements with details.
--   **FAQ Section**: Learn more about the periodic table and its history.
--   **Responsive Design**: optimized for desktop and mobile viewing.
--   **Serverless Ready**: Configured for easy deployment on Vercel.
+Python and Flask, with Jinja2 templates and plain CSS. Set up for Vercel (`vercel.json` routes every request to the Flask app).
 
-## Tech Stack
+## Files
 
--   **Backend**: Python, Flask
--   **Frontend**: HTML, CSS, Jinja2 template engine
--   **Deployment**: Vercel (configuration included)
+```
+api/index.py          Flask app (routes: / and /faqq)
+api/element_data.py   element data: name, symbol, number, weight, group, period, type, fact
+api/templates/        index.html (table), faqq.html (FAQ)
+api/static/           styles.css, faq.css
+vercel.json           Vercel routing
+```
 
-## Installation
-
-1.  **Clone the repository:**
-    ```bash
-    git clone https://github.com/your-username/interactive-periodic-table.git
-    cd Interactive-Periodic-Table
-    ```
-
-2.  **Create a virtual environment (optional but recommended):**
-    ```bash
-    python3 -m venv venv
-    source venv/bin/activate  # On Windows use `venv\Scripts\activate`
-    ```
-
-3.  **Install dependencies:**
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-## Usage
-
-**Run the application locally:**
+## Run it locally
 
 ```bash
-python api/index.py
-```
-
-*   The application will be available at `http://localhost:5000`.
-*   Access the FAQ page at `http://localhost:5000/faqq`.
-
-## Deployment
-
-### Vercel
-
-This project is configured for deployment on Vercel.
-
-1.  Install Vercel CLI: `npm i -g vercel`
-2.  Run `vercel` in the project root and follow the prompts.
-3.  The `vercel.json` file handles the rewrites to the Flask application.
-
-## Project Structure
-
-```
-Interactive-Periodic-Table/
-├── api/
-│   ├── index.py          # Main Flask application entry point
-│   ├── element_data.py   # Data for the periodic table
-│   ├── templates/        # HTML templates (index.html, faqq.html)
-│   └── static/           # Static assets (CSS, JS, images)
-├── requirements.txt      # Python dependencies
-├── vercel.json           # Vercel configuration
-└── README.md             # Project documentation
+pip install -r requirements.txt
+flask --app api/index run      # http://localhost:5000
 ```
